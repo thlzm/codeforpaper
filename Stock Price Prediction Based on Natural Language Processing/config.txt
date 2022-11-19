@@ -1,0 +1,186 @@
+
+sudo mkdir -p ms_log
+CUR_DIR=`pwd`
+PROJECT_DIR=$(cd "$(dirname "$0")" || exit; pwd)
+export GLOG_log_dir=${CUR_DIR}/ms_log
+export GLOG_logtostderr=0
+sudo python -u ${PROJECT_DIR}/../my_ubuntu_classifier.py  \
+    --device_target="GPU" \
+    --do_train="true" \
+    --do_eval="true" \
+    --do_predict="true" \
+    --assessment_method="f1" \
+    --device_id=0 \
+    --epoch_num=4 \
+    --num_class=2 \
+    --train_data_shuffle="true" \
+    --eval_data_shuffle="false" \
+    --predict_data_shuffle="false" \
+    --train_batch_size=128 \
+    --eval_batch_size=8 \
+    --predict_batch_size=8 \
+    --save_finetune_checkpoint_path="./data/base" \
+    --load_pretrain_checkpoint_path="./data/base/bert_NEZHA_large.ckpt" \
+    --load_finetune_checkpoint_path="" \
+    --train_data_file_path="./data/train.tf_record" \
+    --eval_data_file_path="./data/eval.tf_record" \
+    --predict_data_file_path="./data/predict.tf_record" \
+    --predict_result_path='./data/predict_result.csv' \
+    --schema_file_path=""  2>&1 | tee -a classifier_log.txt &
+
+
+
+
+device_target=GPU ;
+do_train=true ;
+do_eval=true ;
+do_predict=false ;
+assessment_method=F1;
+device_id=0 ;
+epoch_num=4 ;
+num_class=2 ;
+train_data_shuffle=true ;
+eval_data_shuffle=false ;
+predict_data_shuffle=false;
+train_batch_size=128 ;
+eval_batch_size=8 ;
+predict_batch_size=8 ;
+save_finetune_checkpoint_path= ./data/base; 
+load_pretrain_checkpoint_path= ./data/base/bert_NEZHA_large.ckpt;
+
+train_data_file_path= ./data/train.tf_record; 
+eval_data_file_path= ./data/eval.tf_record;
+
+predict_data_file_path= ./data/predict.tf_record;
+predict_result_path=./data/nezha_predict_result.csv;
+load_finetune_checkpoint_path= ./data/base/classifier-4_17523.ckpt;
+
+
+
+
+device_target=Ascend ;
+do_train=false ;
+do_eval=false ;
+do_predict=true ;
+assessment_method=F1;
+device_id=0 ;
+epoch_num=4 ;
+num_class=2 ;
+train_data_shuffle=true ;
+eval_data_shuffle=true ;
+predict_data_shuffle=false;
+train_batch_size=128 ;
+eval_batch_size=8 ;
+predict_batch_size=8 ;
+save_finetune_checkpoint_path= ./data/base;
+load_pretrain_checkpoint_path= ./data/base/bert_NEZHA_large.ckpt;
+
+train_data_file_path= ./data/train.tf_record;
+eval_data_file_path= ./data/eval.tf_record;
+
+predict_data_file_path= ./data/predict.tf_record;
+predict_result_path=./data/nezha_predict_result.csv;
+load_finetune_checkpoint_path= ./data/base/classifier_2-4_17523.ckpt;
+
+
+
+
+
+
+
+
+
+
+device_target=GPU ;
+do_train=true ;
+do_eval=true ;
+do_predict=false ;
+assessment_method=F1;
+device_id=0 ;
+epoch_num=4 ;
+num_class=2 ;
+train_data_shuffle=true ;
+eval_data_shuffle=false ;
+predict_data_shuffle=false;
+train_batch_size=128 ;
+eval_batch_size=8 ;
+predict_batch_size=8 ;
+save_finetune_checkpoint_path= ./data/base; 
+load_pretrain_checkpoint_path= ./data/base/bert_NEZHA_large.ckpt;
+
+train_data_file_path= ./data/train.tf_record; 
+eval_data_file_path= ./data/eval.tf_record;
+
+predict_data_file_path= ./data/predict.tf_record;
+predict_result_path=./data/nezha_predict_result.csv;
+load_finetune_checkpoint_path= ./data/base/classifier-4_17523.ckpt;
+
+
+
+
+# 22-03-31测试
+# 激活congda
+echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc
+source ~/.bashrc
+source activate /home/ma-user/miniconda3/envs/MindSpore-python3.7-aarch64
+
+
+# 安装mindspore
+pip install https://ms-release.obs.cn-north-4.myhuaweicloud.com/1.0.1/MindSpore/gpu/ubuntu_x86/cuda-10.1/mindspore_gpu-1.0.1-cp37-cp37m-linux_x86_64.whl --trusted-host ms-release.obs.cn-north-4.myhuaweicloud.com
+
+pip install https://ms-release.obs.cn-north-4.myhuaweicloud.com/1.1.0/MindSpore/ascend/euleros_aarch64/mindspore_ascend-1.1.0-cp37-cp37m-linux_aarch64.whl --trusted-host ms-release.obs.cn-north-4.myhuaweicloud.com
+
+
+pip install https://ms-release.obs.cn-north-4.myhuaweicloud.com/1.2.0/MindSpore/ascend/euleros_aarch64/mindspore_ascend-1.2.0-cp37-cp37m-linux_aarch64.whl --trusted-host ms-release.obs.cn-north-4.myhuaweicloud.com
+
+pip install https://ms-release.obs.cn-north-4.myhuaweicloud.com/1.3.0/MindSpore/ascend/euleros_aarch64/mindspore_ascend-1.3.0-cp37-cp37m-linux_aarch64.whl --trusted-host ms-release.obs.cn-north-4.myhuaweicloud.com
+
+
+
+python ./my_classifier.py \
+	--device_target="Ascend" \
+	--do_train="true" \
+	--do_eval="true" \
+	--do_predict="false" \
+	--assessment_method="F1" \
+	--device_id=0 \
+	--epoch_num=4 \
+	--num_class=2 \
+	--train_data_shuffle="true" \
+	--eval_data_shuffle="false" \
+	--predict_data_shuffle="false" \
+	--train_batch_size=128 \
+	--eval_batch_size=8 \
+	--predict_batch_size=8 \
+	--save_finetune_checkpoint_path="./data" \
+	--load_pretrain_checkpoint_path="./data/bert_NEZHA_large.ckpt" \
+	--train_data_file_path="./data/train.tf_record" \
+	--eval_data_file_path="./data/eval.tf_record" \
+	--predict_data_file_path="./data/predict.tf_record" \
+	--predict_result_path="./data/nezha_predict_result.csv" \
+	--load_finetune_checkpoint_path="./data/classifier-4_17523.ckpt"
+
+
+
+python ./code/my_classifier.py \
+	--device_target="GPU" \
+	--do_train="true" \
+	--do_eval="true" \
+	--do_predict="false" \
+	--assessment_method="F1" \
+	--device_id=0 \
+	--epoch_num=4 \
+	--num_class=2 \
+	--train_data_shuffle="true" \
+	--eval_data_shuffle="false" \
+	--predict_data_shuffle="false" \
+	--train_batch_size=128 \
+	--eval_batch_size=8 \
+	--predict_batch_size=8 \
+	--save_finetune_checkpoint_path="./data" \
+	--load_pretrain_checkpoint_path="./data/bert_NEZHA_large.ckpt" \
+	--train_data_file_path="./data/train.tf_record" \
+	--eval_data_file_path="./data/eval.tf_record" \
+	--predict_data_file_path="./data/predict.tf_record" \
+	--predict_result_path="./data/nezha_predict_result.csv" \
+	--load_finetune_checkpoint_path="./data/classifier-4_17523.ckpt"
